@@ -1,24 +1,17 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 1. Create bot w/ @BotFather
 
-Things you may want to cover:
+## 2. Hook bot to app
 
-* Ruby version
+GET request:
 
-* System dependencies
+```
+https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://titaniumabbot.herokuapp.com/bot/hook
+```
 
-* Configuration
+JSON response:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+{"ok":true,"result":true,"description":"Webhook was set"}
+```
