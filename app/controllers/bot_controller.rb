@@ -11,7 +11,7 @@ class BotController < ActionController::Base
 
     case match&.[](:command)
     when '/calc'
-      ast = CalculatorService.parse match[:body]
+      ast = CalculatorService.parse match[:body].squish
       message = ast.eval.to_s
     when nil
       # nop
