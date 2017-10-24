@@ -6,11 +6,11 @@ class BotController < ActionController::Base
 
     chat_id = params[:message][:chat][:id]
 
-    params[:message][:text].match /^(?<command>\/\w+)(?<body>.*)/
+    params[:message][:text].match /^(\/(?<command>\w+) )?(?<body>.*)/
     match = Regexp.last_match
 
     case match&.[](:command)
-    when '/calc'
+    when 'calc'
       ast = CalculatorService.parse match[:body].squish
       message = ast.eval.to_s
     when nil
