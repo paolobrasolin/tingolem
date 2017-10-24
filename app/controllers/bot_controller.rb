@@ -6,11 +6,21 @@ class BotController < ActionController::Base
 
     chat_id = params[:message][:chat][:id]
 
-    ast = CalculatorService.parse(params[:message][:text])
-    message = ast.eval.to_s
+    params[:message][:text].match /^(?<command>\/\w+)(?<body>.*)/
+    match = Regexp.last_match
+
+    case match&.[](:command)
+    when '/calc'
+      ast = CalculatorService.parse match[:body]
+      message = ast.eval.to_s
+    when nil
+      # nop
+    else
+      # nop
+    end
   rescue Parslet::ParseFailed
     message = "Espressione non valida!"
   ensure
-    api.sendMessage chat_id, message
+    api.sendMessage chat_id, message if message.present?
   end
 end
