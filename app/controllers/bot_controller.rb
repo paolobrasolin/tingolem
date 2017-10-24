@@ -6,8 +6,8 @@ class BotController < ActionController::Base
 
     chat_id = params[:message][:chat][:id]
 
-    result = CalculatorService.parse(params[:message][:text]).eval
-    message = result
+    ast = CalculatorService.parse(params[:message][:text])
+    message = ast.eval.to_s
   rescue Parslet::ParseFailed
     message = "Espressione non valida!"
   ensure
