@@ -23,6 +23,7 @@ class BotController < ActionController::Base
       serialized_payload = JSON.parse Base64.urlsafe_decode64(match[:body])
       puts '*'*50
       puts serialized_payload
+      puts params
       puts '*'*50
       User.find(serialized_payload['user_id']).update! telegram_user_id: params[:from][:id]
       chat_id = params[:message][:chat][:id]
