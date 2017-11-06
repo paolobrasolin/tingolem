@@ -21,12 +21,7 @@ class BotController < ActionController::Base
       message = ast.eval.to_s
     when 'start'
       serialized_payload = JSON.parse Base64.urlsafe_decode64(match[:body])
-      telegram_user_id = params[:from][:id]
-      puts '*'*50
-      puts serialized_payload
-      puts params
-      puts telegram_user_id
-      puts '*'*50
+      telegram_user_id = params[:message][:from][:id]
       User.find(serialized_payload['user_id']).update! telegram_user_id: telegram_user_id
       chat_id = params[:message][:chat][:id]
       message = "You have been recognized."
