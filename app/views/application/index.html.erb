@@ -1,0 +1,36 @@
+<style>
+table {
+border-width: 0;
+border-style: none;
+border-color: #0000ff;
+border-collapse: collapse;
+}
+
+td {
+border-left: solid 10px #000;
+padding: 0; 
+margin: 0; 
+width: 0px; 
+height: 10px; 
+}
+
+td.black { border-color: #000; }
+td.white { border-color: #fff; }
+</style>
+
+<p>I am the Titanium Abbot.</p>
+<% if user_signed_in? %>
+    <p>I recognize you as <%= current_user.email %>.</p>
+    <p><%= link_to('Log out.', destroy_user_session_path, method: :delete) %></p>
+    <% if current_user.telegram_user_id.present? %>
+        <p>We're having a convo on Telegram.</p>
+    <% else %>
+        <p>We're not having a convo on Telegram.</p>
+        <p>To start one click <a href ="<%= @deep_link %>"> here</a> or watch intently:</p>
+        <%= raw @qr_code.as_html %>
+    <% end %>
+<% else %>
+    <p>I do not recognize you. </p>
+    <p><%= link_to('Log in.', new_user_session_path) %></p>
+    <p><%= link_to('Sign up.', new_user_registration_path) %></p>
+<% end %>

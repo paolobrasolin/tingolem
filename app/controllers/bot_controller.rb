@@ -1,6 +1,12 @@
+require "base64"
+require "json"
+
 class BotController < ActionController::Base
+
+
   def hook
     # TODO: replace outdated lib
+    # https://core.telegram.org/bots#deep-linking
     bot_token = Rails.application.secrets.bot_token
     api = TelegramAPI.new bot_token
 
@@ -13,8 +19,9 @@ class BotController < ActionController::Base
     when 'calc'
       ast = CalculatorService.parse match[:body].squish
       message = ast.eval.to_s
-    when nil
-      # nop
+    when 'start'
+      serialized_payload = JSON.parse Base64.urlsafe_encode64(match[:body])
+      User.find(serialized_payload[:user_id]).update! telegram_user_id: params[:from][:id]
     else
       # nop
     end

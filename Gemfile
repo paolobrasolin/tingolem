@@ -62,3 +62,7 @@ gem 'telegramAPI'
 
 gem 'parslet'
 
+gem 'devise'
+
+gem 'rqrcode'
+
